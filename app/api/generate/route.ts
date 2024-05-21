@@ -1,29 +1,19 @@
-import { NextResponse } from "next/server";
-
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_KEY, // This is the default and can be omitted
-});
-
-async function sayBot() {
-  const chatCompletion = await openai.chat.completions.create({
-    messages: [{ role: "user", content: "Say this is a test" }],
-    model: "gpt-3.5-turbo",
-  });
-  return chatCompletion;
-}
+import { NextRequest, NextResponse } from "next/server";
+import { generateQuiz } from "./@utils/common";
+import { NextApiRequest } from "next";
 
 // To handle a GET request to /api
-export async function GET() {
+export async function GET(req: NextApiRequest) {
   try {
-    const resp = await sayBot();
-    return NextResponse.json(
-      {
-        resp,
-      },
-      { status: 200 }
-    );
+    // const { quizTopic, quizDescription, noOfQuestionsToGenerate } = req.body;
+    // const resp = await generateQuiz(
+    //   quizTopic,
+    //   quizDescription,
+    //   noOfQuestionsToGenerate
+    // );
+    const resp = await generateQuiz("minoxidil", "invention of minoxidil", 5);
+    const quiz = JSON.parse(resp);
+    return NextResponse.json(quiz, { status: 200 });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
