@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import React, { useState } from "react";
 
 const GenerateQuiz = () => {
@@ -10,19 +11,16 @@ const GenerateQuiz = () => {
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("exec");
-    const { topic, description, noOfQuestionsToGenerate } = formData;
+
     try {
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        body: {
-          quizTopic: topic,
-          quizDescription: description,
-          noOfQuestionsToGenerate: noOfQuestionsToGenerate,
-        },
+      const { topic, description, noOfQuestionsToGenerate } = formData;
+      const res = await axios.post("/api/generate", {
+        quizTopic: topic,
+        quizDescription: description,
+        noOfQuestionsToGenerate: noOfQuestionsToGenerate,
       });
 
-      console.log(res.json());
+      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
