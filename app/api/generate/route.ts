@@ -3,15 +3,15 @@ import { generateQuiz } from "./@utils/common";
 import { NextApiRequest } from "next";
 
 // To handle a GET request to /api
-export async function GET(req: NextApiRequest) {
+export async function POST(req: NextApiRequest) {
   try {
-    // const { quizTopic, quizDescription, noOfQuestionsToGenerate } = req.body;
-    // const resp = await generateQuiz(
-    //   quizTopic,
-    //   quizDescription,
-    //   noOfQuestionsToGenerate
-    // );
-    const resp = await generateQuiz("minoxidil", "invention of minoxidil", 5);
+    const { quizTopic, quizDescription, noOfQuestionsToGenerate } = req.body;
+    const resp = await generateQuiz(
+      quizTopic,
+      quizDescription,
+      noOfQuestionsToGenerate
+    );
+    // const resp = await generateQuiz("minoxidil", "invention of minoxidil", 5);
     const quiz = JSON.parse(resp);
     return NextResponse.json(quiz, { status: 200 });
   } catch (e: any) {

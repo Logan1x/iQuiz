@@ -8,8 +8,24 @@ const GenerateQuiz = () => {
     noOfQuestionsToGenerate: 0,
   });
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("exec");
+    const { topic, description, noOfQuestionsToGenerate } = formData;
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        body: {
+          quizTopic: topic,
+          quizDescription: description,
+          noOfQuestionsToGenerate: noOfQuestionsToGenerate,
+        },
+      });
+
+      console.log(res.json());
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
