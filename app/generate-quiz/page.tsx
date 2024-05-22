@@ -1,30 +1,22 @@
 "use client";
-import { supabase } from "@/config/supabaseConfig";
 import axios from "axios";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useGetUser } from "@/contexts/user";
+import { supabase } from "@/config/supabaseConfig";
 
 const GenerateQuiz = () => {
   const [loading, setLoading] = useState(false);
   const [generatedQuiz, setGeneratedQuiz] = useState(null);
-  const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
     topic: "",
     description: "",
     noOfQuestionsToGenerate: 0,
   });
 
+  const { user } = useGetUser();
+
   const router = useRouter();
-  useEffect(() => {
-    async function getUserData() {
-      await supabase.auth.getUser().then((user) => {
-        if (user) {
-          setUser(user.data);
-        }
-      });
-    }
-    getUserData();
-  }, []);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -50,7 +42,7 @@ const GenerateQuiz = () => {
         quizTopic: topic,
         quizDescription: description,
         noOfQuestionsToGenerate: noOfQuestionsToGenerate,
-        uid: user?.user.id,
+        uid: user?.id,
       });
 
       setGeneratedQuiz(res.data);
