@@ -68,7 +68,42 @@ export async function createQuiz(res: string, uid: string) {
     if (error) {
       throw new Error(error.message);
     }
-  } catch (error) {
-    console.error("error", error);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getQuizById(quizId: string, uid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("quizes")
+      .select()
+      .eq("id", quizId)
+      .eq("uid", uid);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getQuizzes(uid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("quizes")
+      .select()
+      .eq("uid", uid);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }
