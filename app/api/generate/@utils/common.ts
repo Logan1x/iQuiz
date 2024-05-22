@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { supabase } from "@/config/supabaseConfig";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY, // This is the default and can be omitted
@@ -55,4 +56,19 @@ export async function generateQuiz(
     model: "gpt-3.5-turbo",
   });
   return chatCompletion.choices[0].message.content;
+}
+
+export async function createQuiz(res: string, uid: string) {
+  try {
+    const { error } = await supabase
+      .from("quizes")
+      .insert([{ quizzes: res, uid }])
+      .select();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (error) {
+    console.error("error", error);
+  }
 }

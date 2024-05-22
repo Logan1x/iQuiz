@@ -1,25 +1,44 @@
 "use client";
 import { supabase } from "@/config/supabaseConfig";
 import axios from "axios";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const GenerateQuiz = () => {
   const [loading, setLoading] = useState(false);
   const [generatedQuiz, setGeneratedQuiz] = useState(null);
+  const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
     topic: "",
     description: "",
     noOfQuestionsToGenerate: 0,
   });
 
-  async function fetchData() {
-    try {
-      const { data, error } = await supabase.from("quizes").select();
-      return data;
-    } catch (error) {
-      console.error("error", error);
+  const router = useRouter();
+  useEffect(() => {
+    async function getUserData() {
+      await supabase.auth.getUser().then((user) => {
+        if (user) {
+          setUser(user.data);
+        }
+      });
     }
-  }
+    getUserData();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
+  // async function fetchData() {
+  //   try {
+  //     const { data, error } = await supabase.from("quizes").select();
+  //     return data;
+  //   } catch (error) {
+  //     console.error("error", error);
+  //   }
+  // }
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,10 +50,9 @@ const GenerateQuiz = () => {
         quizTopic: topic,
         quizDescription: description,
         noOfQuestionsToGenerate: noOfQuestionsToGenerate,
+        uid: user?.user.id,
       });
 
-      console.log(res.data);
-      console.log("fetchData", await fetchData());
       setGeneratedQuiz(res.data);
     } catch (error) {
       console.error(error);
@@ -91,6 +109,10 @@ const GenerateQuiz = () => {
               Generate
             </button>
           </form>
+          <div className="mt-12">
+            <div className="px-12"> {JSON.stringify(user)}</div>
+            <button onClick={handleSignOut}>Sign Out</button>
+          </div>
           <div className="mt-4">
             {generatedQuiz && JSON.stringify(generatedQuiz, null, 2)}
           </div>

@@ -1,26 +1,9 @@
 import { NextResponse } from "next/server";
-import { generateQuiz } from "./@utils/common";
-import { supabase } from "@/config/supabaseConfig";
+import { generateQuiz, createQuiz } from "./@utils/common";
 
-async function postData(res: string) {
-  try {
-    const { error } = await supabase
-      .from("quizes")
-      .insert([{ quizzes: res }])
-      .select();
-
-    if (error) {
-      throw new Error(error.message);
-    }
-  } catch (error) {
-    console.error("error", error);
-  }
-}
-
-// To handle a GET request to /api
 export async function POST(req: Request) {
   try {
-    const { quizTopic, quizDescription, noOfQuestionsToGenerate } =
+    const { quizTopic, quizDescription, noOfQuestionsToGenerate, uid } =
       await req.json();
 
     if (!quizTopic) {
@@ -37,7 +20,7 @@ export async function POST(req: Request) {
       throw new Error("Received null response from generateQuiz function");
     }
 
-    await postData(res);
+    await createQuiz(res, uid);
 
     const quiz = JSON.parse(res);
 
