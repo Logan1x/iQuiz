@@ -31,15 +31,6 @@ const GenerateQuiz = () => {
     router.push("/");
   };
 
-  // async function fetchData() {
-  //   try {
-  //     const { data, error } = await supabase.from("quizes").select();
-  //     return data;
-  //   } catch (error) {
-  //     console.error("error", error);
-  //   }
-  // }
-
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
