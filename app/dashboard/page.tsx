@@ -1,27 +1,30 @@
 "use client";
-import { supabase } from "@/config/supabaseConfig";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useGetUser } from "@/contexts/user";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
   const [quizzes, setQuizzes] = useState([]);
-  async function fetchData() {
-    try {
-      const { data, error } = await supabase.from("quizes").select();
-      return data;
-    } catch (error) {
-      console.error("error", error);
-    }
-  }
+  const { user } = useGetUser();
+
+  console.log(user);
 
   useEffect(() => {
-    async function fetchQuizes() {
-      const data = await fetchData();
-      setQuizzes(data);
+    async function fetchQuizzes() {
+      try {
+        const res = user && (await axios.get(`/api/quizByUid?uid=${user?.id}`));
+
+        console.log(res.data);
+
+        setQuizzes(res.data);
+      } catch (error) {
+        console.error(error);
+      }
     }
-    fetchQuizes();
-  }, []);
+    user && fetchQuizzes();
+  }, [user]);
 
   return (
     <div className="container mx-auto">

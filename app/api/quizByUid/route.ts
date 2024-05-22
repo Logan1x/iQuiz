@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
-import { getQuizById, getQuizzes } from "../@utils/common";
+import { getQuizzes } from "../@utils/common";
 
 export async function GET(req: Request) {
   try {
-    const { uid } = await req.json();
+    console.log("req", req);
+    const op = await req.url.search;
+    console.log("op", op);
+
+    console.log("uid", uid);
 
     if (!uid) {
-      throw new Error("quizId cannot be null");
+      throw new Error("UID cannot be null");
     }
 
     const res = await getQuizzes(uid);
