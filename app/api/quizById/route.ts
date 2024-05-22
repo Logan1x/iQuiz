@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getQuizById } from "../@utils/common";
+import { getQuizById } from "../_utils/common";
 
 export async function GET(req: Request) {
   try {

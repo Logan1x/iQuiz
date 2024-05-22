@@ -8,15 +8,15 @@ import { supabase } from "@/config/supabaseConfig";
 const GenerateQuiz = () => {
   const [loading, setLoading] = useState(false);
   const [generatedQuiz, setGeneratedQuiz] = useState(null);
+
   const [formData, setFormData] = useState({
     topic: "",
     description: "",
     noOfQuestionsToGenerate: 0,
   });
 
-  const { user } = useGetUser();
-
   const router = useRouter();
+  const { user } = useGetUser();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();

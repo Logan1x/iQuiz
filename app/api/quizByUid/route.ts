@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { getQuizById, getQuizzes } from "../@utils/common";
+import { getQuizzes } from "../_utils/common";
 
 export async function GET(req: Request) {
   try {
-    const { uid } = await req.json();
+    const urlInstance = new URL(req.url);
+    const uid = urlInstance.searchParams.get("uid");
 
     if (!uid) {
-      throw new Error("quizId cannot be null");
+      throw new Error("UID cannot be null");
     }
 
     const res = await getQuizzes(uid);
@@ -14,8 +15,6 @@ export async function GET(req: Request) {
     if (res === null) {
       throw new Error("Received null response from generateQuiz function");
     }
-
-    // const quiz = JSON.parse(res);
 
     return NextResponse.json(res, { status: 200 });
   } catch (e: any) {
