@@ -6,6 +6,8 @@ import { useGetUser } from "@/contexts/user";
 import { supabase } from "@/config/supabaseConfig";
 
 const GenerateQuiz = () => {
+  const { user, onSignOut } = useGetUser();
+
   const [loading, setLoading] = useState(false);
   const [generatedQuiz, setGeneratedQuiz] = useState(null);
 
@@ -14,14 +16,6 @@ const GenerateQuiz = () => {
     description: "",
     noOfQuestionsToGenerate: 0,
   });
-
-  const router = useRouter();
-  const { user } = useGetUser();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-  };
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +88,7 @@ const GenerateQuiz = () => {
           </form>
           <div className="mt-12">
             <div className="px-12"> {JSON.stringify(user)}</div>
-            <button onClick={handleSignOut}>Sign Out</button>
+            <button onClick={() => onSignOut()}>Sign Out</button>
           </div>
           <div className="mt-4">
             {generatedQuiz && JSON.stringify(generatedQuiz, null, 2)}

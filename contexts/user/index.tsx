@@ -1,5 +1,6 @@
 "use client";
 import { User } from "@/types/user";
+import { useRouter } from "next/router";
 import { supabase } from "@/config/supabaseConfig";
 import { UserContextType, UserProviderProps } from "./types";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export const useGetUser = () => {
 };
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -40,7 +42,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     })();
   }, []);
 
-  const contextValue: UserContextType = { user };
+  const onSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
+  const contextValue: UserContextType = { user, onSignOut };
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
