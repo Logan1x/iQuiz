@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateQuiz, createQuiz } from "./@utils/common";
+import { generateQuiz, createQuiz } from "../@utils/common";
 
 export async function POST(req: Request) {
   try {
