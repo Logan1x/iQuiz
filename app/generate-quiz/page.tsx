@@ -1,16 +1,29 @@
 "use client";
+import { supabase } from "@/config/supabaseConfig";
 import axios from "axios";
 import React, { useState } from "react";
 
 const GenerateQuiz = () => {
+  const [loading, setLoading] = useState(false);
+  const [generatedQuiz, setGeneratedQuiz] = useState(null);
   const [formData, setFormData] = useState({
     topic: "",
     description: "",
     noOfQuestionsToGenerate: 0,
   });
 
+  async function fetchData() {
+    try {
+      const { data, error } = await supabase.from("quizes").select();
+      return data;
+    } catch (error) {
+      console.error("error", error);
+    }
+  }
+
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const { topic, description, noOfQuestionsToGenerate } = formData;
@@ -21,51 +34,69 @@ const GenerateQuiz = () => {
       });
 
       console.log(res.data);
+      console.log("fetchData", await fetchData());
+      setGeneratedQuiz(res.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="flex min-h-screen flex-col items-center gap-4 p-24">
-      <h1 className="text-2xl font-bold">Generate Quiz</h1>
+    <>
+      {" "}
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <p>
+            Loading <span className="animate-ping">...</span>
+          </p>
+        </div>
+      ) : (
+        <section className="flex min-h-screen flex-col items-center gap-4 p-24">
+          <h1 className="text-2xl font-bold">Generate Quiz</h1>
 
-      <form
-        onSubmit={submitHandler}
-        className="flex flex-col gap-4 w-3/5 justify-center items-center h-32 rounded p-24 mt-6"
-      >
-        <input
-          name="topic"
-          placeholder="Topic"
-          className="w-2/3 border p-2"
-          onChange={(e) => {
-            const { name, value } = e.target;
-            setFormData((prev) => ({ ...prev, [name]: value }));
-          }}
-        />
-        <input
-          name="noOfQuestionsToGenerate"
-          placeholder="No of Questions to Generate"
-          className="w-2/3 border p-2"
-          onChange={(e) => {
-            const { name, value } = e.target;
-            setFormData((prev) => ({ ...prev, [name]: value }));
-          }}
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          className="w-2/3 border p-2"
-          onChange={(e) => {
-            const { name, value } = e.target;
-            setFormData((prev) => ({ ...prev, [name]: value }));
-          }}
-        />
-        <button type="submit" className="border px-2 py-1 font-semibold">
-          Generate
-        </button>
-      </form>
-    </section>
+          <form
+            onSubmit={submitHandler}
+            className="flex flex-col gap-4 w-3/5 justify-center items-center h-32 rounded p-24 mt-6"
+          >
+            <input
+              name="topic"
+              placeholder="Topic"
+              className="w-2/3 border p-2"
+              onChange={(e) => {
+                const { name, value } = e.target;
+                setFormData((prev) => ({ ...prev, [name]: value }));
+              }}
+            />
+            <input
+              name="noOfQuestionsToGenerate"
+              placeholder="No of Questions to Generate"
+              className="w-2/3 border p-2"
+              onChange={(e) => {
+                const { name, value } = e.target;
+                setFormData((prev) => ({ ...prev, [name]: value }));
+              }}
+            />
+            <textarea
+              name="description"
+              placeholder="Description"
+              className="block w-2/3 border p-2 min-h-20"
+              onChange={(e) => {
+                const { name, value } = e.target;
+                setFormData((prev) => ({ ...prev, [name]: value }));
+              }}
+            />
+            <button type="submit" className="border px-2 py-1 font-semibold">
+              Generate
+            </button>
+          </form>
+          <div className="mt-4">
+            {generatedQuiz && JSON.stringify(generatedQuiz, null, 2)}
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
