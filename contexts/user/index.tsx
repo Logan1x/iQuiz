@@ -1,6 +1,6 @@
 "use client";
 import { User } from "@/types/user";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/config/supabaseConfig";
 import { UserContextType, UserProviderProps } from "./types";
 import React, { createContext, useContext, useEffect, useState } from "react";

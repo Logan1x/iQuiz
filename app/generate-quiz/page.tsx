@@ -23,14 +23,14 @@ const GenerateQuiz = () => {
 
     try {
       const { topic, description, noOfQuestionsToGenerate } = formData;
-      const res = await axios.post("/api/generate", {
+      const { data } = await axios.post("/api/generate", {
         quizTopic: topic,
         quizDescription: description,
         noOfQuestionsToGenerate: noOfQuestionsToGenerate,
         uid: user?.id,
       });
 
-      setGeneratedQuiz(res.data);
+      setGeneratedQuiz(data);
     } catch (error) {
       console.error(error);
     } finally {
