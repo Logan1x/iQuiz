@@ -85,7 +85,7 @@ export async function getQuizById(quizId: string, uid: string) {
       throw new Error(error.message);
     }
 
-    return data;
+    return data[0];
   } catch (error: any) {
     throw new Error(error.message);
   }

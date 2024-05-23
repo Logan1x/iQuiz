@@ -9,7 +9,16 @@ type Quiz = {
   questions: Array<Question>;
 };
 
+export type QuizRecord = {
+  id: string;
+  uid: string;
+  quiz: Quiz;
+  history: Array<any>;
+  created_at: string;
+};
+
 export type Question = {
+  answer: string;
   question: string;
   weightage: number;
   options: Array<string>;
