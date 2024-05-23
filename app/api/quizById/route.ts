@@ -3,7 +3,12 @@ import { getQuizById } from "../_utils/common";
 
 export async function GET(req: Request) {
   try {
-    const { quizId, uid } = await req.json();
+    const urlInstance = new URL(req.url);
+    const uid = urlInstance.searchParams.get("uid");
+    const quizId = urlInstance.searchParams.get("quizId");
+
+    console.log("quizId", quizId);
+    console.log("uid", uid);
 
     if (!quizId) {
       throw new Error("quizId cannot be null");

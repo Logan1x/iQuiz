@@ -39,8 +39,7 @@ const GenerateQuiz = () => {
   };
 
   return (
-    <>
-      {" "}
+    <main className="min-h-screen  py-24 w-full">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <p>
@@ -48,12 +47,12 @@ const GenerateQuiz = () => {
           </p>
         </div>
       ) : (
-        <section className="flex min-h-screen flex-col items-center gap-4 p-24">
+        <section className="flex flex-col w-full  items-center gap-4 ">
           <h1 className="text-2xl font-bold">Generate Quiz</h1>
 
           <form
             onSubmit={submitHandler}
-            className="flex flex-col gap-4 w-3/5 justify-center items-center h-32 rounded p-24 mt-6"
+            className="flex flex-col gap-4 w-full md:w-3/5 justify-center items-center h-32 rounded py-24 mt-6"
           >
             <input
               name="topic"
@@ -82,12 +81,14 @@ const GenerateQuiz = () => {
                 setFormData((prev) => ({ ...prev, [name]: value }));
               }}
             />
-            <button type="submit" className="border px-2 py-1 font-semibold">
+            <button
+              type="submit"
+              className="border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
+            >
               Generate
             </button>
           </form>
           <div className="mt-12">
-            <div className="px-12"> {JSON.stringify(user)}</div>
             <button onClick={() => onSignOut()}>Sign Out</button>
           </div>
           <div className="mt-4">
@@ -95,7 +96,7 @@ const GenerateQuiz = () => {
           </div>
         </section>
       )}
-    </>
+    </main>
   );
 };
 

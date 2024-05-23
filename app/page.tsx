@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter();
   supabase.auth.onAuthStateChange(async (event) => {
     if (event == "SIGNED_IN") {
-      router.push("/generate-quiz");
+      router.push("/dashboard");
     }
   });
   return (
