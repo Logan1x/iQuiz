@@ -7,11 +7,12 @@ export async function GET(req: Request) {
     const uid = urlInstance.searchParams.get("uid");
     const quizId = urlInstance.searchParams.get("quizId");
 
-    console.log("quizId", quizId);
-    console.log("uid", uid);
-
     if (!quizId) {
       throw new Error("quizId cannot be null");
+    }
+
+    if (uid === null) {
+      throw new Error("uid cannot be null");
     }
 
     const res = await getQuizById(quizId, uid);
@@ -19,8 +20,6 @@ export async function GET(req: Request) {
     if (res === null) {
       throw new Error("Received null response from generateQuiz function");
     }
-
-    // const quiz = JSON.parse(res);
 
     return NextResponse.json(res, { status: 200 });
   } catch (e: any) {

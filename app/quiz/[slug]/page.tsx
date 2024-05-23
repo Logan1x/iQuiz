@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useGetUser } from "@/contexts/user";
 import axios from "axios";
-type Props = {};
+import { useGetUser } from "@/contexts/user";
+import React, { useEffect, useState } from "react";
+import { Quiz } from "@/types/quiz";
 
 const QuizPage = ({ params }: { params: { slug: string } }) => {
   const { user } = useGetUser();
   const [loading, setLoading] = useState(false);
-  const [quizData, setQuizData] = useState(null);
+  const [quizData, setQuizData] = useState<Quiz>();
 
   useEffect(() => {
     if (user) {
@@ -17,7 +17,6 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
           const { data } = await axios.get(
             `/api/quizById?quizId=${params.slug}&uid=${user?.id}`
           );
-          console.log(data);
           setQuizData({
             ...data,
             questions: JSON.parse(data.questions),
@@ -29,25 +28,23 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
         }
       })();
     }
-  }, [user]);
+  }, [user, params.slug]);
 
-  const [userAnswers, setUserAnswers] = useState(
-    Array(quizData?.questions?.length).fill(null)
-  );
+  const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
 
-  const handleOptionChange = (index, option) => {
+  const handleOptionChange = (index: number, option: string) => {
     const newAnswers = [...userAnswers];
     newAnswers[index] = option;
     setUserAnswers(newAnswers);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     let score = 0;
-    if (quizData?.questions) {
-      for (let i = 0; i < quizData?.questions?.length; i++) {
-        if (quizData?.questions[i]?.answer === userAnswers[i]) {
-          score += quizData?.questions[i].weightage;
+    if (quizData && quizData.questions) {
+      for (let i = 0; i < quizData.questions.length; i++) {
+        if (quizData.questions[i].answer === userAnswers[i]) {
+          score += quizData.questions[i].weightage;
         }
       }
     }
@@ -59,8 +56,8 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
   return (
     quizData && (
       <div className="relative p-4 w-full max-w-2xl max-h-full flex justify-center">
-        <div className="relative bg-white rounded-lg shadow min-w-[960px] ">
-          <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
+        <div className="relative bg-white rounded-lg shadow min-w-[960px]">
+          <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
             <h3 className="text-xl font-semibold text-gray-900">Quiz</h3>
             <button
               type="button"
@@ -76,9 +73,9 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>

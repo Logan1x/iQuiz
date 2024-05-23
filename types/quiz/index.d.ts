@@ -12,6 +12,7 @@ type Quiz = {
 export type Question = {
   question: string;
   weightage: number;
+  answer: string;
   options: Array<string>;
   difficulty: Difficulty;
 };
