@@ -1,6 +1,6 @@
 export interface QuizType {
   id: string;
-  quizzes: Array<Quiz> | string;
+  quiz: Array<Quiz> | string;
   created_at: string;
 }
 

@@ -1,17 +1,24 @@
 "use client";
 import axios from "axios";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useGetUser } from "@/contexts/user";
 import { QuizType } from "@/types/quiz";
 import { getTotalWeightageOfquiz } from "./helpers";
 import Link from "next/link";
 import Quiz from "../quiz/quiz";
+import { redirect } from "next/navigation";
 
 const Dashboard: React.FC = () => {
   const { user } = useGetUser();
   const [loading, setLoading] = useState(true);
   const [batchOfQuiz, setBatchOfQuiz] = useState<Array<QuizType> | []>([]);
+
+  useLayoutEffect(() => {
+    if (!user) {
+      redirect("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -38,7 +45,7 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="container p-24 mx-auto relative">
+    <div className="container px-24 py-12 mx-auto relative">
       <h1 className="text-4xl font-bold">Dashboard</h1>
       <section>
         {loading ? (
@@ -46,11 +53,11 @@ const Dashboard: React.FC = () => {
         ) : (
           <div className="flex flex-col flex-wrap gap-6 mt-6">
             {batchOfQuiz.length > 0 ? (
-              batchOfQuiz.map(({ id, quizzes, created_at }) => {
+              batchOfQuiz.map(({ id, quiz, created_at }) => {
                 const actuallyCreatedAt =
                   moment(created_at).format("DD MMMM, YYYY");
 
-                const { topic, questions } = JSON.parse(quizzes as string);
+                const { topic, questions } = JSON.parse(quiz as string);
                 const totalWeightage = getTotalWeightageOfquiz(questions);
 
                 return (
