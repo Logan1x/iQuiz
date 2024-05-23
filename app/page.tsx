@@ -15,7 +15,7 @@ export default function Home() {
     }
   });
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start p-24 gap-2">
+    <section className="flex flex-col items-center justify-start p-24 gap-2">
       <h1 className="text-2xl">Welcome, Click on button below</h1>
       <Link
         className="text-xl font-semibold border-2 px-2 py-1 rounded "
@@ -29,6 +29,6 @@ export default function Home() {
         appearance={{ theme: ThemeSupa }}
         onlyThirdPartyProviders
       />
-    </main>
+    </section>
   );
 }
