@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
     if (!user) {
       redirect("/");
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user) {

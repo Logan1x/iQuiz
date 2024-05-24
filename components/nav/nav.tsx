@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useGetUser } from "@/contexts/user";
 import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/config/supabaseConfig";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -19,7 +20,7 @@ const Nav = (props: Props) => {
     } else {
       router.push("/");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <nav className="h-16 border-b-2 flex items-center justify-between container mx-auto px-6 py-1 flex-0">
@@ -49,7 +50,7 @@ const Nav = (props: Props) => {
             <Auth
               supabaseClient={supabase}
               providers={["github"]}
-              // socialLayout="horizontal"
+              appearance={{ theme: ThemeSupa }}
               onlyThirdPartyProviders
             />
           </>

@@ -23,12 +23,6 @@ export default function Home() {
       >
         Generate Quiz
       </Link>
-      <Auth
-        supabaseClient={supabase}
-        providers={["github"]}
-        appearance={{ theme: ThemeSupa }}
-        onlyThirdPartyProviders
-      />
     </section>
   );
 }

@@ -44,6 +44,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const onSignOut = async () => {
     await supabase.auth.signOut();
+    setUser(null);
     router.push("/");
   };
 
