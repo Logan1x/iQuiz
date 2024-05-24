@@ -62,7 +62,7 @@ export async function createQuiz(res: string, uid: string) {
   try {
     const { error } = await supabase
       .from("quizes")
-      .insert([{ quizzes: res, uid }])
+      .insert([{ quiz: res, uid }])
       .select();
 
     if (error) {
