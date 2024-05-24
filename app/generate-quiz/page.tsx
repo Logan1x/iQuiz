@@ -6,10 +6,9 @@ import { useGetUser } from "@/contexts/user";
 import { supabase } from "@/config/supabaseConfig";
 
 const GenerateQuiz = () => {
-  const { user, onSignOut } = useGetUser();
+  const { user } = useGetUser();
 
   const [loading, setLoading] = useState(false);
-  const [generatedQuiz, setGeneratedQuiz] = useState(null);
 
   const [formData, setFormData] = useState({
     topic: "",
@@ -29,8 +28,6 @@ const GenerateQuiz = () => {
         noOfQuestionsToGenerate: noOfQuestionsToGenerate,
         uid: user?.id,
       });
-
-      setGeneratedQuiz(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -39,7 +36,7 @@ const GenerateQuiz = () => {
   };
 
   return (
-    <main className="min-h-screen  py-24 w-full">
+    <main className="min-h-screen py-24 w-full">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <p>
@@ -47,21 +44,23 @@ const GenerateQuiz = () => {
           </p>
         </div>
       ) : (
-        <section className="flex flex-col w-full  items-center gap-4 ">
+        <section className="flex flex-col w-full items-center gap-4 ">
           <h1 className="text-2xl font-bold">Generate Quiz</h1>
 
           <form
+            autoComplete="off"
             onSubmit={submitHandler}
-            className="flex flex-col gap-4 w-full md:w-3/5 justify-center items-center h-32 rounded py-24 mt-6"
+            className="border flex flex-col gap-4 w-full md:w-3/5 justify-center items-center rounded py-24 mt-6"
           >
             <input
               name="topic"
-              placeholder="Topic"
+              placeholder="Topic (required)"
               className="w-2/3 border p-2"
               onChange={(e) => {
                 const { name, value } = e.target;
                 setFormData((prev) => ({ ...prev, [name]: value }));
               }}
+              required
             />
             <input
               name="noOfQuestionsToGenerate"
@@ -88,12 +87,6 @@ const GenerateQuiz = () => {
               Generate
             </button>
           </form>
-          <div className="mt-12">
-            <button onClick={() => onSignOut()}>Sign Out</button>
-          </div>
-          <div className="mt-4">
-            {generatedQuiz && JSON.stringify(generatedQuiz, null, 2)}
-          </div>
         </section>
       )}
     </main>
