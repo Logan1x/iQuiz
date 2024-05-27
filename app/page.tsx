@@ -1,10 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/config/supabaseConfig";
-import { createContext } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
