@@ -9,11 +9,13 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+
   supabase.auth.onAuthStateChange(async (event) => {
     if (event == "SIGNED_IN") {
-      router.push("/dashboard");
+      // router.push("/dashboard");
     }
   });
+
   return (
     <section className="flex flex-col items-center justify-start p-24 gap-2">
       <h1 className="text-2xl">Welcome, Click on button below</h1>

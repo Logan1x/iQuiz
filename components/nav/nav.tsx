@@ -12,13 +12,13 @@ const Nav: React.FC = () => {
   const router = useRouter();
   const { user, onSignOut } = useGetUser();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
-    } else {
-      router.push("/");
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/dashboard");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, [user, router]);
 
   return (
     <nav className="h-16 border-b-2 flex items-center justify-between container mx-auto px-6 py-1 flex-0">

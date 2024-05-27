@@ -6,7 +6,7 @@ import { useGetUser } from "@/contexts/user";
 import { QuizType } from "@/types/quiz";
 import { getTotalWeightageOfquiz } from "./helpers";
 import Link from "next/link";
-import Quiz from "../quiz/quiz";
+import Quiz from "../quizer/quiz";
 import { redirect } from "next/navigation";
 
 const Dashboard: React.FC = () => {
