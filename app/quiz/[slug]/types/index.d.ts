@@ -5,6 +5,7 @@ export interface QuizPlayReducerState {
   activeQuestionIndex: number;
   userResponses: Array<string>;
   quizRecord: QuizRecord | null;
+  score: number;
 }
 
 export type QuizPlayReducerAction =

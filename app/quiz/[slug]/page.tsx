@@ -3,13 +3,16 @@ import axios from "axios";
 import { useGetUser } from "@/contexts/user";
 import { useEffect, useReducer } from "react";
 import { QuizTile } from "./components/quiz-tile";
+import QuickResult from "./components/quick-result";
 import { initState, quizPlayReducer } from "./reducers/quiz-play-reducer";
+import { getTotalWeightageOfquiz } from "@/app/dashboard/helpers";
 
 const QuizPage = ({ params }: { params: { slug: string } }) => {
   const { user } = useGetUser();
   const [state, dispatch] = useReducer(quizPlayReducer, initState);
 
-  const { loading, quizRecord, activeQuestionIndex, userResponses } = state;
+  const { loading, quizRecord, activeQuestionIndex, userResponses, score } =
+    state;
 
   useEffect(() => {
     if (user) {
@@ -43,10 +46,15 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
       quizPlayDispatch: dispatch,
       userResponses,
     };
-    console.log({ state });
+    const totalWeightage = getTotalWeightageOfquiz(questions);
+
     return (
       <div className="flex mt-6 justify-center p-24 ">
-        <QuizTile {...quizTileProps} />
+        {score ? (
+          <QuickResult totalWeightage={totalWeightage} score={score} />
+        ) : (
+          <QuizTile {...quizTileProps} />
+        )}
       </div>
     );
   }
