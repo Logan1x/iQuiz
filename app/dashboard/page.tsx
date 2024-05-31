@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="container px-24 py-12 mx-auto relative">
+    <div className="container px-4 md:px-24 py-12 mx-auto relative">
       <h1 className="text-4xl font-bold">Dashboard</h1>
       <section>
         {loading ? (
@@ -62,33 +62,35 @@ const Dashboard: React.FC = () => {
                 return (
                   <div
                     key={id}
-                    className="border rounded flex px-4 py-6 w-full justify-between shadow"
+                    className="border rounded flex px-4 py-6 w-full justify-between shadow flex-wrap"
                   >
                     <div>
-                      <p className="font-semibold text-xl">{topic}</p>
-                      <div className="flex gap-2">
+                      <p className="font-semibold text-2xl md:text-xl capitalize">
+                        {topic}
+                      </p>
+                      <div className="flex gap-1 md:gap-2 flex-col md:flex-row text-xs md:text-base text-gray-600">
                         <p>{questions.length} Questions</p>
-                        <p>•</p>
+                        <p className="hidden md:block">•</p>
                         <p>Total Weightage: {totalWeightage}</p>
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <div className="flex gap-2">
-                        <button className="w-fit px-4 py-1 border mt-2 font-semibold">
+                      <div className="flex gap-2 justify-end">
+                        {/* <button className="w-fit px-4 py-1 border mt-2 font-semibold">
                           History
-                        </button>
+                        </button> */}
                         <Link
                           href={`/quiz/${id}`}
-                          className="w-fit px-4 py-1 border mt-2 font-semibold"
+                          className="w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
                         >
                           Play
                         </Link>
-                        <button className="w-fit px-4 py-1 border text-red-400 border-red-400 mt-2 font-semibold">
+                        {/* <button className="w-fit px-4 py-1 border text-red-400 border-red-400 mt-2 font-semibold">
                           Archive
-                        </button>
+                        </button> */}
                       </div>
-                      <p className="self-end text-sm text-gray-400 italic">
-                        created at {actuallyCreatedAt}
+                      <p className="self-end text-xs text-gray-400">
+                        Created at {actuallyCreatedAt}
                       </p>
                     </div>
                   </div>

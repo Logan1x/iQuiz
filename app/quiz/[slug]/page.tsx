@@ -49,7 +49,7 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
     const totalWeightage = getTotalWeightageOfquiz(questions);
 
     return (
-      <div className="flex mt-6 justify-center p-24 ">
+      <div className="flex mt-6 justify-center p-4 md:p-24 ">
         {score ? (
           <QuickResult totalWeightage={totalWeightage} score={score} />
         ) : (

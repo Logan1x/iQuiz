@@ -29,7 +29,6 @@ const quizPlayReducer = (
       const { userResponses, questions } = action.payload;
       const score = questions.reduce((prev, curr, _) => {
         const { answer, weightage } = curr;
-        console.log({ prev, curr });
         if (answer === userResponses[_]) {
           return Number(prev) + Number(weightage);
         }

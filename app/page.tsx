@@ -15,9 +15,10 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center justify-start p-24 gap-2">
-      <h1 className="text-2xl">Welcome, Click on button below</h1>
+      <h1 className="text-4xl">IntelliQuiz</h1>
+      <h2 className="text-lg">Let’s begin the adventure</h2>
       <Link
-        className="text-xl font-semibold border-2 px-2 py-1 rounded "
+        className="text-xl my-2 border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
         href="/generate-quiz"
       >
         Generate Quiz

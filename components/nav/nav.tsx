@@ -29,11 +29,11 @@ const Nav: React.FC = () => {
       </div>
       <div>
         {user ? (
-          <div className="gap-2 flex items-center">
-            <Link href="/generate-quiz" className="text-base hover:underline">
+          <div className="md:gap-2 flex items-center flex-col md:flex-row">
+            <Link href="/generate-quiz" className="text-base underline">
               Generate Quiz
             </Link>
-            <Link href="/dashboard" className="text-base hover:underline">
+            <Link href="/dashboard" className="text-base underline">
               Dashboard
             </Link>
           </div>
@@ -42,6 +42,26 @@ const Nav: React.FC = () => {
       <div>
         {user ? (
           <div className="flex gap-2">
+            <button
+              className="text-gray-600 cursor-pointer font-semibold text-base hover:underline"
+              onClick={() => onSignOut()}
+            >
+              <svg
+                fill="none"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                />
+              </svg>
+            </button>
             <div className="rounded-full h-10 w-10">
               <Image
                 className="rounded-full object-cover w-full h-full"
@@ -52,12 +72,6 @@ const Nav: React.FC = () => {
                 unoptimized
               />
             </div>
-            <button
-              className="text-red-400 cursor-pointer font-semibold text-base hover:underline"
-              onClick={() => onSignOut()}
-            >
-              Logout
-            </button>
           </div>
         ) : (
           <Auth

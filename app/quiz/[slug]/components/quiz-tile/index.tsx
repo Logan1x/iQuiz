@@ -1,3 +1,4 @@
+import { use } from "react";
 import { Props } from "./types";
 import { getTotalWeightageOfquiz } from "@/app/dashboard/helpers";
 
@@ -29,32 +30,32 @@ export const QuizTile = (props: Props) => {
   const currentQuestionWeightage = questions[activeQuestionIndex].weightage;
 
   return (
-    <div className="border rounded-sm w-2/4 p-8">
-      <div className="flex items-center gap-4">
-        <h2 className="text-5xl font-bold">{topic}</h2>
-        <div className="flex gap-2">
-          <div className="px-2 py-1 border rounded">
+    <div className="border rounded-sm md:w-2/4 p-8">
+      <div className="flex items-baseline gap-1 justify-between md:justify-normal md:gap-4">
+        <h2 className="text-3xl md:text-5xl font-bold capitalize">{topic}</h2>
+        <div className="flex gap-2 text-sm md:text-base">
+          <div className="px-2 py-1 border rounded text-xs md:text-base">
             Total questions: {maxNoOfQuestions}
           </div>
-          <div className="px-2 py-1 border rounded">
+          <div className="px-2 py-1 border rounded text-xs md:text-base">
             Weightage: {totalWeightage}
           </div>
         </div>
       </div>
-      <div className="flex gap-2 mt-4">
-        <div className="px-3 py-1 border rounded bg-gray-400 text-white">
+      <div className="flex gap-2 mt-4 flex-col md:flex-row ">
+        <div className="px-3 py-1 border rounded bg-gray-600 text-white">
           Current question: {numberFormatter(activeQuestionIndex + 1)}
         </div>
-        <div className="px-3 py-1 border rounded bg-gray-400 text-white">
+        <div className="px-3 py-1 border rounded bg-gray-600 text-white">
           Difficulty: {currentQuestionDifficulty}
         </div>
-        <div className="px-2 py-1 border rounded bg-gray-400 text-white">
+        <div className="px-2 py-1 border rounded bg-gray-600 text-white">
           Current question weightage:{" "}
           {numberFormatter(currentQuestionWeightage)}
         </div>
       </div>
       <div className="flex flex-col gap-2 mt-4">
-        <p className="text-2xl font-semibold h-12">{currentQuestion}</p>
+        <p className="text-2xl font-semibold min-h-12">{currentQuestion}</p>
         <div className="flex flex-col gap-2 justify-start p-4">
           {options.map((option, _) => (
             <section key={option} className="flex gap-2 items-center">
@@ -77,7 +78,7 @@ export const QuizTile = (props: Props) => {
               </label>
             </section>
           ))}
-          <div className="flex gap-2 w-full justify-center">
+          <div className="flex gap-2 w-full justify-center mt-2">
             <button
               className="disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300 font-semibold px-4 py-1 bg-none border border-gray-200 text-black rounded"
               onClick={() =>
@@ -98,7 +99,13 @@ export const QuizTile = (props: Props) => {
             ) : (
               <button
                 onClick={handleSubmit}
-                className="font-semibold px-4 py-1 rounded bg-amber-400 text-black"
+                className={
+                  `font-semibold px-4 py-1 rounded bg-amber-400 text-black` +
+                  (userResponses.length !== maxNoOfQuestions
+                    ? " cursor-not-allowed bg-amber-100 text-gray-400"
+                    : "")
+                }
+                disabled={userResponses.length !== maxNoOfQuestions}
               >
                 Submit
               </button>

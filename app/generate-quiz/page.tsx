@@ -7,6 +7,7 @@ import { supabase } from "@/config/supabaseConfig";
 
 const GenerateQuiz = () => {
   const { user } = useGetUser();
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
@@ -32,6 +33,7 @@ const GenerateQuiz = () => {
       console.error(error);
     } finally {
       setLoading(false);
+      router.push("/dashboard");
     }
   };
 
