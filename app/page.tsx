@@ -28,7 +28,7 @@ export default function Home() {
           providers={["github"]}
           appearance={{ theme: ThemeSupa }}
           onlyThirdPartyProviders
-          redirectTo={window.location.origin}
+          redirectTo={global?.window && window.location.origin}
         />
       )}
     </section>
