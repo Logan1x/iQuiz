@@ -10,6 +10,10 @@ export async function POST(req: Request) {
       throw new Error("Topic cannot be null");
     }
 
+    if (noOfQuestionsToGenerate < 20) {
+      throw new Error("Number of questions to generate should be less than 20");
+    }
+
     const res = await generateQuiz(
       quizTopic,
       quizDescription,

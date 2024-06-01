@@ -1,9 +1,8 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useLayoutEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
 import { useGetUser } from "@/contexts/user";
-import { supabase } from "@/config/supabaseConfig";
 
 const GenerateQuiz = () => {
   const { user } = useGetUser();
@@ -37,10 +36,16 @@ const GenerateQuiz = () => {
     }
   };
 
+  useLayoutEffect(() => {
+    if (!user) {
+      redirect("/");
+    }
+  }, [user]);
+
   return (
-    <main className="min-h-screen py-24 w-full">
+    <section className="py-6 md:py-24 w-full">
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center">
           <p>
             Loading <span className="animate-ping">...</span>
           </p>
@@ -52,7 +57,7 @@ const GenerateQuiz = () => {
           <form
             autoComplete="off"
             onSubmit={submitHandler}
-            className="border flex flex-col gap-4 w-full md:w-3/5 justify-center items-center rounded py-24 mt-6"
+            className="md:border flex flex-col gap-4 w-full md:w-3/5 justify-center items-center rounded py-6 md:py-24 px-2 mt-6"
           >
             <input
               name="topic"
@@ -91,7 +96,7 @@ const GenerateQuiz = () => {
           </form>
         </section>
       )}
-    </main>
+    </section>
   );
 };
 

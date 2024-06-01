@@ -100,10 +100,10 @@ export const QuizTile = (props: Props) => {
               <button
                 onClick={handleSubmit}
                 className={
-                  `font-semibold px-4 py-1 rounded bg-amber-400 text-black` +
+                  `font-semibold px-4 py-1 rounded ` +
                   (userResponses.length !== maxNoOfQuestions
-                    ? " cursor-not-allowed bg-amber-100 text-gray-400"
-                    : "")
+                    ? " cursor-not-allowed bg-amber-100 text-gray-600"
+                    : "bg-amber-400 text-black")
                 }
                 disabled={userResponses.length !== maxNoOfQuestions}
               >

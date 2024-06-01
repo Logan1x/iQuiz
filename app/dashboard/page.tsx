@@ -45,7 +45,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container px-4 md:px-24 py-12 mx-auto relative">
-      <h1 className="text-4xl font-bold">Dashboard</h1>
+      <div className="flex items-baseline justify-between">
+        <h1 className="text-3xl font-bold">Quizboard</h1>
+        <Link
+          className="px-4 py-2 rounded shadow font-semibold border-gray-700 border-2 text-gray-700 hover:bg-gray-700 hover:text-gray-50 hover:shadow-lg transition duration-300 ease-in-out"
+          href="/generate-quiz"
+        >
+          Generate new quiz
+        </Link>
+      </div>
       <section>
         {loading ? (
           <Loader />
@@ -62,34 +70,47 @@ const Dashboard: React.FC = () => {
                 return (
                   <div
                     key={id}
-                    className="border rounded flex px-4 py-6 w-full justify-between shadow flex-wrap"
+                    className="rounded flex flex-col md:items-baseline md:flex-row px-4 py-6 w-full justify-between shadow flex-wrap"
                   >
-                    <div>
+                    <div className="gap-1">
                       <p className="font-semibold text-2xl md:text-xl capitalize">
                         {topic}
                       </p>
-                      <div className="flex gap-1 md:gap-2 flex-col md:flex-row text-xs md:text-base text-gray-600">
-                        <p>{questions.length} Questions</p>
-                        <p className="hidden md:block">•</p>
-                        <p>Total Weightage: {totalWeightage}</p>
+                      <div className="flex gap-1 md:gap-2 flex-row text-xs md:text-base text-gray-600">
+                        <p>
+                          <span className="text-sm font-bold">
+                            {questions.length}
+                          </span>{" "}
+                          Questions
+                        </p>
+                        <p>•</p>
+                        <p>
+                          Total Weightage:{" "}
+                          <span className="text-sm font-bold">
+                            {totalWeightage}
+                          </span>
+                        </p>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
+                      <p className="block md:hidden self-end text-xs text-gray-400">
+                        Created at {actuallyCreatedAt}
+                      </p>
                       <div className="flex gap-2 justify-end">
                         {/* <button className="w-fit px-4 py-1 border mt-2 font-semibold">
                           History
                         </button> */}
                         <Link
                           href={`/quiz/${id}`}
-                          className="w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
+                          className="w-full md:w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
                         >
-                          Play
+                          Play Quiz
                         </Link>
                         {/* <button className="w-fit px-4 py-1 border text-red-400 border-red-400 mt-2 font-semibold">
                           Archive
                         </button> */}
                       </div>
-                      <p className="self-end text-xs text-gray-400">
+                      <p className="hidden md:block self-end text-xs text-gray-400">
                         Created at {actuallyCreatedAt}
                       </p>
                     </div>

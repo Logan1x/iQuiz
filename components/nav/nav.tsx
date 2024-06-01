@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetUser } from "@/contexts/user";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -11,36 +11,47 @@ import Image from "next/image";
 const Nav: React.FC = () => {
   const router = useRouter();
   const { user, onSignOut } = useGetUser();
+  const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/dashboard");
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    setLoading(true);
+    if (user) {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <nav className="h-16 border-b-2 flex items-center justify-between container mx-auto px-6 py-1 flex-0">
       <div className="px-4">
-        <Link href="/" className="text-xl font-semibold">
+        <Link
+          href={user ? "/dashboard" : "/"}
+          className="hidden md:block text-xl font-semibold"
+        >
           IntelliQuiz
+        </Link>
+        <Link
+          href={user ? "/dashboard" : "/"}
+          className="block md:hidden text-xl font-semibold"
+        >
+          IQ
         </Link>
       </div>
       <div>
         {user ? (
-          <div className="md:gap-2 flex items-center flex-col md:flex-row">
-            <Link href="/generate-quiz" className="text-base underline">
-              Generate Quiz
+          <div className="gap-2 flex items-center md:flex-row">
+            <Link href="/dashboard" className="text-base">
+              Quizboard
             </Link>
-            <Link href="/dashboard" className="text-base underline">
-              Dashboard
+            <Link href="/generate-quiz" className="text-base">
+              Generate
             </Link>
           </div>
         ) : null}
       </div>
       <div>
-        {user ? (
+        {!loading ? (
+          <div>Loading...</div>
+        ) : user ? (
           <div className="flex gap-2">
             <button
               className="text-gray-600 cursor-pointer font-semibold text-base hover:underline"
@@ -79,6 +90,7 @@ const Nav: React.FC = () => {
             providers={["github"]}
             appearance={{ theme: ThemeSupa }}
             onlyThirdPartyProviders
+            redirectTo={window.location.origin}
           />
         )}
       </div>
