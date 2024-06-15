@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { UserProvider } from "@/contexts/user";
 import Nav from "@/components/nav/nav";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +17,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const CrispWithNoSSR = dynamic(() => import("@/components/crisp/crisp"));
+
   return (
     <html lang="en">
+      <CrispWithNoSSR />
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <UserProvider>
           <Nav />
