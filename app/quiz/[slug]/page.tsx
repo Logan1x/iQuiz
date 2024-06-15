@@ -44,10 +44,10 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
       (async () => {
         try {
           await axios.post("/api/quizHistory", {
-            quizId: quizRecord.id,
-            uid: user.id,
-            userName: user.name,
-            userAvatar: user.avatar_url,
+            quizId: quizRecord?.id,
+            uid: user?.id,
+            userName: user?.name,
+            userAvatar: user?.avatar_url,
             score,
           });
         } catch (error) {
