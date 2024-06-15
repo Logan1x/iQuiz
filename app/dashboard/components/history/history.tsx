@@ -45,10 +45,10 @@ const HistoryDialog = ({ qid, totalWeightage }: Props) => {
           {quizHistory.length > 0 ? (
             <>
               {" "}
-              <div className="flex flex-col gap-2 mt-2">
+              <div className="flex flex-col gap-2 mt-2 mx-auto">
                 {quizHistory.map((history: HistoryProps, index: number) => (
                   <div
-                    className=" rounded shadow flex justify-between p-2 items-center"
+                    className=" rounded-sm shadow flex justify-between p-2 items-center"
                     key={index}
                   >
                     <Image
