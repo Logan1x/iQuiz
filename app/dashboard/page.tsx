@@ -7,6 +7,15 @@ import { QuizType } from "@/types/quiz";
 import { getTotalWeightageOfquiz } from "./helpers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { MdHistory } from "react-icons/md";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import HistoryDialog from "./components/history/history";
 
 const Dashboard: React.FC = () => {
   const { user } = useGetUser();
@@ -97,15 +106,32 @@ const Dashboard: React.FC = () => {
                         Created at {actuallyCreatedAt}
                       </p>
                       <div className="flex gap-2 justify-end">
-                        {/* <button className="w-fit px-4 py-1 border mt-2 font-semibold">
-                          History
-                        </button> */}
                         <Link
                           href={`/quiz/${id}`}
                           className="w-full md:w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
                         >
                           Play Quiz
                         </Link>
+
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Dialog>
+                                <DialogTrigger>
+                                  <MdHistory size={24} />
+                                </DialogTrigger>
+                                <HistoryDialog
+                                  qid={id}
+                                  totalWeightage={totalWeightage}
+                                />
+                              </Dialog>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>History</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
                         {/* <button className="w-fit px-4 py-1 border text-red-400 border-red-400 mt-2 font-semibold">
                           Archive
                         </button> */}

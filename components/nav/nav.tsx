@@ -7,6 +7,7 @@ import { supabase } from "@/config/supabaseConfig";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { MdOutlineLogout } from "react-icons/md";
 
 const Nav: React.FC = () => {
   const router = useRouter();
@@ -57,21 +58,7 @@ const Nav: React.FC = () => {
               className="text-gray-600 cursor-pointer font-semibold text-base hover:underline"
               onClick={() => onSignOut()}
             >
-              <svg
-                fill="none"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
-                />
-              </svg>
+              <MdOutlineLogout size={24} />
             </button>
             <div className="rounded-full h-10 w-10">
               <Image

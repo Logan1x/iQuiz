@@ -109,6 +109,24 @@ export async function getQuizzes(uid: string) {
   }
 }
 
+export async function getQuizHistory(quizId: string) {
+  try {
+    const { data, error } = await supabase
+      .from("history")
+      .select()
+      .eq("quizId", quizId)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
 export async function postQuizHistory(
   quizId: string,
   uid: string,
