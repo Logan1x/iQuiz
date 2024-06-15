@@ -96,13 +96,39 @@ export async function getQuizzes(uid: string) {
     const { data, error } = await supabase
       .from("quizes")
       .select()
-      .eq("uid", uid);
+      .eq("uid", uid)
+      .order("created_at", { ascending: false });
 
     if (error) {
       throw new Error(error.message);
     }
 
     return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function postQuizHistory(
+  quizId: string,
+  uid: string,
+  score: number,
+  userName: string,
+  userAvatar: string
+) {
+  try {
+    const { data, error } = await supabase
+      .from("history")
+      .insert([
+        { quizId, score, uid, user_name: userName, user_avatar: userAvatar },
+      ])
+      .select();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data[0];
   } catch (error: any) {
     throw new Error(error.message);
   }

@@ -1,11 +1,12 @@
 "use client";
 import axios from "axios";
 import { useGetUser } from "@/contexts/user";
-import { useEffect, useReducer } from "react";
+import { useEffect, useLayoutEffect, useReducer } from "react";
 import { QuizTile } from "./components/quiz-tile";
 import QuickResult from "./components/quick-result";
 import { initState, quizPlayReducer } from "./reducers/quiz-play-reducer";
 import { getTotalWeightageOfquiz } from "@/app/dashboard/helpers";
+import { redirect } from "next/navigation";
 
 const QuizPage = ({ params }: { params: { slug: string } }) => {
   const { user } = useGetUser();
@@ -13,6 +14,12 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
 
   const { loading, quizRecord, activeQuestionIndex, userResponses, score } =
     state;
+
+  useLayoutEffect(() => {
+    if (!user) {
+      redirect("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -31,6 +38,24 @@ const QuizPage = ({ params }: { params: { slug: string } }) => {
       })();
     }
   }, [user, params.slug]);
+
+  useEffect(() => {
+    if (score) {
+      (async () => {
+        try {
+          await axios.post("/api/quizHistory", {
+            quizId: quizRecord.id,
+            uid: user.id,
+            userName: user.name,
+            userAvatar: user.avatar_url,
+            score,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [score]);
 
   if (loading && !quizRecord) return <div>Loading...</div>;
 
