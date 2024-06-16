@@ -38,7 +38,7 @@ const HistoryDialog = ({ qid, totalWeightage }: Props) => {
   }, []);
 
   return (
-    <DialogContent>
+    <DialogContent className="w-full px-4">
       <DialogHeader>
         <DialogTitle className="text-xl">Quiz History</DialogTitle>
         <DialogDescription>

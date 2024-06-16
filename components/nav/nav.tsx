@@ -8,6 +8,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { MdOutlineLogout } from "react-icons/md";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { UserIcon, LogOutIcon } from "lucide-react";
 
 const Nav: React.FC = () => {
   const router = useRouter();
@@ -28,7 +36,7 @@ const Nav: React.FC = () => {
           href={user ? "/dashboard" : "/"}
           className="hidden md:block text-xl font-semibold"
         >
-          IntelliQuiz
+          iQuiz
         </Link>
         <Link
           href={user ? "/dashboard" : "/"}
@@ -38,38 +46,44 @@ const Nav: React.FC = () => {
         </Link>
       </div>
       <div>
-        {user ? (
-          <div className="gap-2 flex items-center md:flex-row">
-            <Link href="/dashboard" className="text-base">
-              Quizboard
-            </Link>
-            <Link href="/generate-quiz" className="text-base">
-              Generate
-            </Link>
-          </div>
-        ) : null}
-      </div>
-      <div>
         {!loading ? (
           <div>Loading...</div>
         ) : user ? (
-          <div className="flex gap-2">
-            <button
-              className="text-gray-600 cursor-pointer font-semibold text-base hover:underline"
-              onClick={() => onSignOut()}
+          <div className="flex items-center gap-4">
+            <Link
+              href="/dashboard"
+              className="font-semibold text-gray-900 hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-300"
+              prefetch={false}
             >
-              <MdOutlineLogout size={24} />
-            </button>
-            <div className="rounded-full h-10 w-10">
-              <Image
-                className="rounded-full object-cover w-full h-full"
-                height={8}
-                width={8}
-                alt="profile"
-                src={user?.avatar_url}
-                unoptimized
-              />
-            </div>
+              Quizboard
+            </Link>
+            <Link
+              href="/generate-quiz"
+              className="font-semibold text-gray-900 hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-300"
+              prefetch={false}
+            >
+              Generate
+            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <Image
+                    src={user?.avatar_url}
+                    width="32"
+                    height="32"
+                    className="rounded-full"
+                    alt="Avatar"
+                  />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem onClick={() => onSignOut()}>
+                  <LogOutIcon className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ) : (
           <Auth

@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "IntelliQuiz",
+  title: "iQuiz",
   description: "generate quizzes in seconds",
 };
 
