@@ -9,7 +9,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 export default function Home() {
   const { user } = useGetUser();
   return (
-    <div className="flex flex-col  items-center justify-center h-dvh md:h-full">
+    <div className="flex flex-col items-center justify-center h-full">
       <div className="flex items-center justify-center">
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">

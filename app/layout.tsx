@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <CrispWithNoSSR />
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} h-screen flex flex-col`}>
         <UserProvider>
           <Nav />
           <main className="grow">{children}</main>
