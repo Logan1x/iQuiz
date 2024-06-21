@@ -21,6 +21,26 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <title>iQuiz</title>
+        <meta name="title" content="iQuiz" />
+        <meta name="description" content="generate quizzes in seconds" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://iquiz-ai.vercel.app/" />
+        <meta property="og:title" content="iQuiz" />
+        <meta property="og:description" content="generate quizzes in seconds" />
+        <meta property="og:image" content="%PUBLIC_URL%/iQuiz.png" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://iquiz-ai.vercel.app/" />
+        <meta property="twitter:title" content="iQuiz" />
+        <meta
+          property="twitter:description"
+          content="generate quizzes in seconds"
+        />
+        <meta property="twitter:image" content="%PUBLIC_URL%/iQuiz.png" />
+      </head>
       <CrispWithNoSSR />
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <UserProvider>
