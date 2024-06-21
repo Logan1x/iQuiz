@@ -30,7 +30,7 @@ export default function RootLayout({
         <meta property="og:url" content="https://iquiz-ai.vercel.app/" />
         <meta property="og:title" content="iQuiz" />
         <meta property="og:description" content="generate quizzes in seconds" />
-        <meta property="og:image" content="%PUBLIC_URL%/iQuiz.png" />
+        <meta property="og:image" content="https://i.imgur.com/U3xFyV9.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://iquiz-ai.vercel.app/" />
@@ -39,7 +39,10 @@ export default function RootLayout({
           property="twitter:description"
           content="generate quizzes in seconds"
         />
-        <meta property="twitter:image" content="%PUBLIC_URL%/iQuiz.png" />
+        <meta
+          property="twitter:image"
+          content="https://i.imgur.com/U3xFyV9.png"
+        />
       </head>
       <CrispWithNoSSR />
       <body className={`${inter.className} min-h-screen flex flex-col`}>
