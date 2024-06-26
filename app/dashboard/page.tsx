@@ -7,7 +7,7 @@ import { QuizType } from "@/types/quiz";
 import { getTotalWeightageOfquiz } from "./helpers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { MdHistory } from "react-icons/md";
+import { MdHistory, MdOutlineArchive } from "react-icons/md";
 import {
   Tooltip,
   TooltipContent,
@@ -19,8 +19,9 @@ import HistoryDialog from "./components/history/history";
 
 const Dashboard: React.FC = () => {
   const { user } = useGetUser();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [batchOfQuiz, setBatchOfQuiz] = useState<Array<QuizType> | []>([]);
+  const [reFetchQuiz, setReFetchQuiz] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     if (!user) {
@@ -42,7 +43,19 @@ const Dashboard: React.FC = () => {
         }
       })();
     }
-  }, [user]);
+  }, [user, reFetchQuiz]);
+
+  const handleArchiveQuiz = async (quizId: string) => {
+    try {
+      await axios.post(`/api/archive`, {
+        quizId,
+        uid: user?.id,
+      });
+      setReFetchQuiz(!reFetchQuiz);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const Loader = () => (
     <div className="flex justify-center h-screen mt-20">
@@ -105,7 +118,7 @@ const Dashboard: React.FC = () => {
                       <p className="block md:hidden self-end text-xs text-gray-400">
                         Created at {actuallyCreatedAt}
                       </p>
-                      <div className="flex gap-2 justify-end">
+                      <div className="flex items-baseline gap-2 justify-end">
                         <Link
                           href={`/quiz/${id}`}
                           className="w-full md:w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
@@ -118,7 +131,10 @@ const Dashboard: React.FC = () => {
                             <TooltipTrigger>
                               <Dialog>
                                 <DialogTrigger>
-                                  <MdHistory size={24} />
+                                  <MdHistory
+                                    size={24}
+                                    className="hover:text-gray-500"
+                                  />
                                 </DialogTrigger>
                                 <HistoryDialog
                                   qid={id}
@@ -132,9 +148,20 @@ const Dashboard: React.FC = () => {
                           </Tooltip>
                         </TooltipProvider>
 
-                        {/* <button className="w-fit px-4 py-1 border text-red-400 border-red-400 mt-2 font-semibold">
-                          Archive
-                        </button> */}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <MdOutlineArchive
+                                size={24}
+                                className="hover:text-gray-500"
+                                onClick={() => handleArchiveQuiz(id)}
+                              />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Archive</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                       <p className="hidden md:block self-end text-xs text-gray-400">
                         Created at {actuallyCreatedAt}

@@ -63,7 +63,7 @@ export async function createQuiz(res: string, uid: string) {
   try {
     const { error } = await supabase
       .from("quizes")
-      .insert([{ quiz: res, uid }])
+      .insert([{ quiz: res, uid, archived: false }])
       .select();
 
     if (error) {
@@ -80,7 +80,8 @@ export async function getQuizById(quizId: string, uid: string) {
       .from("quizes")
       .select()
       .eq("id", quizId)
-      .eq("uid", uid);
+      .eq("uid", uid)
+      .eq("archived", false);
 
     if (error) {
       throw new Error(error.message);
@@ -98,6 +99,7 @@ export async function getQuizzes(uid: string) {
       .from("quizes")
       .select()
       .eq("uid", uid)
+      .eq("archived", false)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -151,4 +153,31 @@ export async function postQuizHistory(
   } catch (error: any) {
     throw new Error(error.message);
   }
+}
+
+export async function archiveQuiz(quizId: string, uid: string) {
+  try {
+    const { data, error } = await supabase
+      .from("quizes")
+      .select("id, uid")
+      .eq("id", quizId)
+      .single();
+
+    if (error) throw error;
+
+    if (data.uid === uid) {
+      const { error: updateError } = await supabase
+        .from("quizes")
+        .update({ archived: true })
+        .eq("id", quizId);
+
+      if (updateError) throw updateError;
+
+      return { success: true };
+    } else {
+      throw new Error(
+        "Operation cancelled: the user attempting to archive the quiz is not the creator."
+      );
+    }
+  } catch (error) {}
 }
