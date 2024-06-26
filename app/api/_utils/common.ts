@@ -8,8 +8,9 @@ const openai = new OpenAI({
 export async function generateQuiz(
   quizTopic: string,
   quizDescription: string,
-  noOfQuestionsToGenerate: number = 10
+  noOfQuestionsToGenerate: number = 5
 ) {
+  if (noOfQuestionsToGenerate === 0) noOfQuestionsToGenerate = 5;
   const prompt = `
     You are a world-renowned professor known for creating highly educational and engaging quizzes. Your task is to generate a set of quiz questions
     based on the given topic and description. Each question should be well-crafted to test the knowledge of students comprehensively and should
