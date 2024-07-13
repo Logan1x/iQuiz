@@ -179,5 +179,21 @@ export async function archiveQuiz(quizId: string, uid: string) {
         "Operation cancelled: the user attempting to archive the quiz is not the creator."
       );
     }
-  } catch (error) {}
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function unpauseProject() {
+  try {
+    const { data, error } = await supabase.from("unpause").select("*");
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data[0];
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 }
