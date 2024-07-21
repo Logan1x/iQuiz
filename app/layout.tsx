@@ -48,7 +48,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <UserProvider>
           <Nav />
-          <main className="grow">{children}</main>
+          <main className="relative grow">{children}</main>
         </UserProvider>
       </body>
     </html>
