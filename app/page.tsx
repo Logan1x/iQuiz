@@ -10,6 +10,7 @@ export default function Home() {
   const { user } = useGetUser();
   return (
     <div className="flex flex-col  items-center justify-center h-dvh md:h-full">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#93c5fd_100%)]"></div>
       <div className="flex items-center justify-center">
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
