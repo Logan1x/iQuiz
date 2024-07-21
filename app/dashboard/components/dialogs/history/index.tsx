@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import axios from "axios";
 import Image from "next/image";
@@ -86,4 +84,4 @@ const HistoryDialog = ({ qid, totalWeightage }: Props) => {
   );
 };
 
-export default HistoryDialog;
+export { HistoryDialog };

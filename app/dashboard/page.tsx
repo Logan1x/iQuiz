@@ -15,7 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import HistoryDialog from "./components/history/history";
+import { HistoryDialog, ArchiveDialog } from "./components/dialogs";
 
 const Dashboard: React.FC = () => {
   const { user } = useGetUser();
@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
                       <p className="block md:hidden self-end text-xs text-gray-400">
                         Created at {actuallyCreatedAt}
                       </p>
-                      <div className="flex items-baseline gap-2 justify-end">
+                      <div className="flex items-center gap-2 justify-end">
                         <Link
                           href={`/quiz/${id}`}
                           className="w-full md:w-fit border px-4 py-2 rounded shadow font-semibold bg-gray-700 text-gray-50 hover:bg-gray-800 hover:shadow-lg transition duration-300 ease-in-out"
@@ -151,11 +151,17 @@ const Dashboard: React.FC = () => {
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
-                              <MdOutlineArchive
-                                size={24}
-                                className="hover:text-gray-500"
-                                onClick={() => handleArchiveQuiz(id)}
-                              />
+                              <Dialog>
+                                <DialogTrigger>
+                                  <MdOutlineArchive
+                                    size={24}
+                                    className="hover:text-gray-500"
+                                  />
+                                </DialogTrigger>
+                                <ArchiveDialog
+                                  confirmFn={() => handleArchiveQuiz(id)}
+                                />
+                              </Dialog>
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Archive</p>
