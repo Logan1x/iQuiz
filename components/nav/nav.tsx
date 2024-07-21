@@ -88,7 +88,7 @@ const Nav: React.FC = () => {
         ) : (
           <Auth
             supabaseClient={supabase}
-            providers={["github"]}
+            providers={["google"]}
             appearance={{ theme: ThemeSupa }}
             onlyThirdPartyProviders
             redirectTo={global?.window && window.location.origin}

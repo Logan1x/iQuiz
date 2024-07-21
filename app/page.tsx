@@ -8,6 +8,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 export default function Home() {
   const { user } = useGetUser();
+
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-65px)]">
       <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#93c5fd_100%)]"></div>
@@ -38,7 +39,7 @@ export default function Home() {
                   ) : (
                     <Auth
                       supabaseClient={supabase}
-                      providers={["github"]}
+                      providers={["github", "google"]}
                       appearance={{ theme: ThemeSupa }}
                       onlyThirdPartyProviders
                       redirectTo={global?.window && window.location.origin}
