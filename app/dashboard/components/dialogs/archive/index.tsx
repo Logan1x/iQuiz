@@ -21,8 +21,8 @@ const ArchiveDialog = (props: Props) => {
       <DialogHeader>
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogDescription>
-          This action cannot be undone. This will permanently delete this quiz
-          from our servers.
+          This action cannot be undone. You won't be able to retrieve this quiz
+          later.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
