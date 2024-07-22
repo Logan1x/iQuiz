@@ -21,8 +21,8 @@ const ArchiveDialog = (props: Props) => {
       <DialogHeader>
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogDescription>
-          This action cannot be undone. You won't be able to retrieve this quiz
-          later.
+          This action cannot be undone. You won&#39;t be able to retrieve this
+          quiz later.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
