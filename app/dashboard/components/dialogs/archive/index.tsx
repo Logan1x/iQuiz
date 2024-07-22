@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,7 +26,9 @@ const ArchiveDialog = (props: Props) => {
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button variant={"ghost"}>Cancel</Button>
+        <DialogClose asChild>
+          <Button variant={"ghost"}>Cancel</Button>
+        </DialogClose>
         <Button variant={"destructive"} type="submit" onClick={confirmFn}>
           Confirm
         </Button>
